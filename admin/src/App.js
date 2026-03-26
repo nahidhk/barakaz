@@ -14,7 +14,7 @@ function App() {
         <div>
           <SideBar /> 
         </div>
-        <div>
+        <div className="w100">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/category" element={<Category />} />

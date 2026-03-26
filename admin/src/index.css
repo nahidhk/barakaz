@@ -60,16 +60,80 @@ body {
   align-items: center;
   transition: all 0.3s, color 0.3s;
 }
+
 .sidebar-button:hover {
   color: #4680ff;
   text-decoration: dotted underline;
 }
+
 .icon {
   margin-right: 10px;
-  font-size: 15pt; 
+  font-size: 15pt;
 }
-.bar{
+
+.bar {
   width: 90%;
-  height: 40px;
-  background-color: red;
+  height: auto;
+  margin: 8px auto;
+  border-radius: 5px;
+  background-color: #b8f4ff;
+  padding: 10px;
+  display: inline-flex;
+  border: 1px solid #5ce6ff;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.bar button {
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #5ce6ff;
+  padding: 10px 30px;
+  color: #000;
+  margin: 10px;
+  transition: all 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  text-indent: 10px;
+}
+
+.bar button:hover {
+  background-color: #93bcff;
+  transform: scale(1.1);
+}
+.column{
+  flex-direction: column;
+}
+.gap20{
+  gap: 20px;
+}
+.w90{
+  width: 90%;
+}
+.table , th, td {
+  padding: 10px;
+  text-align: left;
+}
+.table {
+  width: 90%;
+  border-collapse: collapse;
+  border-radius: 10px;
+}
+
+.table thead {
+  background-color: #b8f4ff;
+}
+.table tbody tr:nth-child(even) {
+  background-color: #e3f5f7;
+}
+.table tbody tr:hover {
+  background-color: #5ce6ff;
+}
+.border{
+  border-radius: 100px;
 }

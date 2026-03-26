@@ -1,7 +1,7 @@
 import React from "react";
 import { TbBrandMercedes } from "react-icons/tb";
 import { MdOutlineCategory } from "react-icons/md";
-import { TbCategoryPlus } from "react-icons/tb";
+
 import { useNavigate } from "react-router-dom";
 
 export default function SideBar() {
