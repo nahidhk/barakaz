@@ -1,0 +1,372 @@
+@font-face {
+  font-family: enFont;
+  src: url("./asset/font/en.ttf");
+}
+
+:root {
+  --primary-font: enFont;
+  --primary-color: #1d543d;
+  --text-color: #d2bc7b;
+  --bg-color: #e1e1e1;
+}
+
+
+body {
+  background-color: var(--bg-color);
+  font-size: 15pt;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: var(--primary-font);
+}
+
+.nav {
+  height: 70px;
+  width: 100%;
+  background-color: var(--primary-color);
+  position: sticky;
+  top: 0;
+  box-sizing: border-box;
+  box-shadow: 0 0 3px #fff 0;
+  z-index: 800;
+}
+
+.flex {
+  display: flex;
+}
+
+.none {
+  display: none;
+}
+
+.center {
+  justify-content: center;
+}
+
+.medel {
+  align-items: center;
+}
+
+.around {
+  justify-content: space-around;
+}
+
+.beet {
+  justify-content: space-between;
+}
+
+.golden {
+  color: var(--text-color);
+}
+
+.title {
+  font-size: 2em;
+}
+
+.nav-listBtn {
+  height: auto;
+  margin: 10px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 15pt;
+  padding: 10px;
+  transition: all 0.2s;
+}
+
+.active,
+.nav-listBtn:hover {
+  color: var(--primary-color);
+  background-color: var(--text-color);
+  border-radius: 5px;
+  box-shadow: 0 0 3px #fff 0;
+  transform: scale(1.2);
+}
+
+.pcNone-Flex {
+  display: none;
+}
+
+.arbic_logo {
+  height: 50px;
+
+}
+
+.test {
+  background-color: red;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.dropMenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  background-color: var(--primary-color);
+  width: 400px;
+  justify-content: center;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 0 3px #fff 0;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.openDrop:hover .dropMenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.openDrop:hover .nav-listBtn {
+  color: var(--primary-color);
+  background-color: var(--text-color);
+  border-radius: 5px;
+  box-shadow: 0 0 3px #fff 0;
+  transform: scale(1.2);
+}
+
+.nav-subBtn {
+  padding: 10px;
+  color: #fff;
+  font-size: 15pt;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  width: 100%;
+}
+
+.nav-subBtn:hover {
+  color: var(--text-color);
+  border-radius: 5px;
+  box-shadow: 0 0 3px #fff 0;
+  transform: scale(1.2);
+}
+
+.w100 {
+  width: 100%;
+}
+
+
+/* ============================================ Images Sliders  CSS Code ========================================================*/
+
+/* container */
+.slide-container {
+  position: relative;
+  max-width: 100%;
+  height: 80vh;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* slide base */
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: all 0.6s ease;
+}
+
+/* active slide */
+.slide.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+/* image */
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* arrows */
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 12px 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: 0.3s;
+  z-index: 2;
+}
+
+.prev:hover,
+.next:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+/* positions */
+.prev {
+  left: 15px;
+}
+
+.next {
+  right: 15px;
+}
+
+/* dots container */
+.dots-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+/* dots */
+.dot {
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* active dot */
+.dot.active {
+  background: #ff4d4d;
+  transform: scale(1.3);
+}
+
+/* hover effect */
+.dot:hover {
+  background: #999;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .slide-container {
+    height: 250px;
+  }
+
+  .prev,
+  .next {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+}
+
+/* ----------------/---------------------------- Images Sliders  CSS Code -------------------------/-------------------------------- */
+
+
+/* =============================================== Mobile Version ================================================================*/
+
+@media (max-width: 800px) {
+  .pcNone-Flex {
+    display: flex;
+  }
+
+  .mbBottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 900;
+    background-color: var(--primary-color);
+    justify-content: space-around;
+  }
+
+  .mbBottomNav .nav-listBtn {
+    font-size: 20pt;
+    padding: 10px;
+    border-radius: 100px;
+  }
+
+  .mbNone {
+    display: none;
+  }
+
+  .mobileMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    background-color: var(--primary-color);
+    z-index: 900;
+    height: 100vh;
+    display: none;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  .mobileMenu .nav-listBtn {
+    width: 90%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #ffffff14;
+  }
+
+  .mobileMenu .nav-listBtn:hover {
+    background-color: #ffffff00;
+    transform: none;
+    color: violet;
+  }
+
+  .dropMenu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    animation: none;
+  }
+
+  .openDrop:hover .nav-listBtn {
+    color: violet;
+    background-color: transparent;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #fff 0;
+    transform: scale(1);
+    padding-left: 5px;
+  }
+
+  .closeBtn {
+    color: #fff;
+    font-size: 20pt;
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    cursor: pointer;
+  }
+
+  .mobileMenu.hide {
+    display: none;
+  }
+
+  .mobileMenu.show {
+    display: flex;
+  }
+
+}
