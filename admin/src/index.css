@@ -188,6 +188,20 @@ body {
 .table thead tr th:last-child {
   border-top-right-radius: 12px;
 }
+.test {
+  background-color: red;
+}
+
+.input {
+  padding: 10px;
+  border: 1px solid #00c6ff;
+  border-radius: 5px;
+  width: 250px;
+  box-sizing: border-box;  
+  background-color: #fff;
+}
+
+
 
 @media (max-width: 768px) {
   .table {

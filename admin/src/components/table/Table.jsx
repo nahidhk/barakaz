@@ -9,7 +9,7 @@ export default function Table({ maxdata }) {
     const headers = Object.keys(maxdata[0]);
 
     return (
-        <table className="table">
+        <table className="table animate__animated animate__fadeIn">
 
             <thead>
                 <tr>

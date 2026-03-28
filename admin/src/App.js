@@ -1,4 +1,5 @@
 import React from "react";
+import 'animate.css';
 import Nav from "./components/ui/Nav";
 import SideBar from "./components/ui/SideBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -12,7 +13,7 @@ function App() {
       <Nav />
       <div className="flex">
         <div>
-          <SideBar /> 
+          <SideBar />
         </div>
         <div className="w100">
           <Routes>
