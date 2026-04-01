@@ -83,7 +83,7 @@ export default function Table({ maxdata, action }) {
                                     }
                                     {
                                         action.edit ? (
-                                            <button onClick={() => handelEdit({  name: item.name})} className="iconBtn">
+                                            <button onClick={() => handelEdit({tab: action.edit.tab, name: item.subcategory, id: item.id})} className="iconBtn">
                                                 <CiEdit />
                                             </button>
                                         ) : null
