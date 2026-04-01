@@ -13,7 +13,6 @@
 
 body {
   background-color: var(--bg-color);
-  font-size: 15pt;
 }
 
 * {
@@ -99,6 +98,21 @@ body {
 
 }
 
+.column {
+  flex-direction: column;
+}
+
+.btn {
+  padding: 10px;
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  border: none;
+  outline: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 .test {
   background-color: red;
 }
@@ -112,11 +126,12 @@ body {
   position: absolute;
   top: 100%;
   background-color: var(--primary-color);
-  width: 400px;
-  justify-content: center;
+  width: auto;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 0 3px #fff 0;
   animation: fadeIn 0.3s ease-in-out;
+  height: auto;
+  padding: 15px;
 }
 
 @keyframes fadeIn {
@@ -153,14 +168,13 @@ body {
   outline: none;
   transition: all 0.2s;
   cursor: pointer;
-  width: 100%;
+  width: 100%; 
 }
 
 .nav-subBtn:hover {
   color: var(--text-color);
   border-radius: 5px;
   box-shadow: 0 0 3px #fff 0;
-  transform: scale(1.2);
 }
 
 .w100 {
@@ -170,7 +184,7 @@ body {
 
 /* ============================================ Images Sliders  CSS Code ========================================================*/
 
-/* container */
+
 .slide-container {
   position: relative;
   max-width: 100%;
@@ -180,7 +194,7 @@ body {
   border-radius: 4px;
 }
 
-/* slide base */
+
 .slide {
   position: absolute;
   width: 100%;
@@ -190,21 +204,20 @@ body {
   transition: all 0.6s ease;
 }
 
-/* active slide */
 .slide.active {
   opacity: 1;
   transform: scale(1);
   z-index: 1;
 }
 
-/* image */
+
 .slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* arrows */
+
 .prev,
 .next {
   position: absolute;
@@ -214,7 +227,7 @@ body {
   font-size: 22px;
   font-weight: bold;
   color: #fff;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   border: none;
   cursor: pointer;
   border-radius: 50%;
@@ -224,10 +237,10 @@ body {
 
 .prev:hover,
 .next:hover {
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
 }
 
-/* positions */
+
 .prev {
   left: 15px;
 }
@@ -236,14 +249,13 @@ body {
   right: 15px;
 }
 
-/* dots container */
+
 .dots-container {
   display: flex;
   justify-content: center;
   margin-top: 15px;
 }
 
-/* dots */
 .dot {
   width: 12px;
   height: 12px;
@@ -254,18 +266,60 @@ body {
   transition: 0.3s;
 }
 
-/* active dot */
 .dot.active {
   background: #ff4d4d;
   transform: scale(1.3);
 }
 
-/* hover effect */
+.errorBtn {
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 15px;
+}
+
+.errorBtn:hover {
+  background-color: #ff1a1a;
+}
+
 .dot:hover {
   background: #999;
 }
 
-/* responsive */
+/* =============================================== Loading ================================================================*/
+.loader {
+  width: 35px;
+  aspect-ratio: 1;
+  --_g: no-repeat radial-gradient(farthest-side, var(--text-color) 94%, #0000);
+  background:
+    var(--_g) 0 0,
+    var(--_g) 100% 0,
+    var(--_g) 100% 100%,
+    var(--_g) 0 100%;
+  background-size: 40% 40%;
+  animation: l38 .5s infinite;
+}
+
+.loaderBox {
+  height: 80px;
+  width: 80px;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes l38 {
+  100% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0
+  }
+}
+
 @media (max-width: 768px) {
   .slide-container {
     height: 250px;
@@ -281,7 +335,53 @@ body {
 /* ----------------/---------------------------- Images Sliders  CSS Code -------------------------/-------------------------------- */
 
 
+
+.fixed {
+  position: fixed;
+}
+
+.index {
+  z-index: 999;
+}
+
+.top {
+  top: 0;
+  left: 0;
+}
+
+.fullPage {
+  width: 100%;
+  height: 100vh;
+}
+
+.darkSide {
+  background-color: #00000046;
+}
+
+.errorCard {
+  background-color: #ff000064;
+  border: 1px solid #ff0000;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 20px;
+  position: fixed;
+  box-shadow: 0 0 10px #ff0000 0;
+  font-family: var(--primary-font);
+  width: 300px;
+}
+
+.errorIcon {
+  font-size: 30pt;
+}
+
+.error {
+  color: #ffa2a2;
+}
+
 /* =============================================== Mobile Version ================================================================*/
+
+
+
 
 @media (max-width: 800px) {
   .pcNone-Flex {

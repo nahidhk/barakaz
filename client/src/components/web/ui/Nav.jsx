@@ -15,18 +15,20 @@ import { clater } from "../../../hooks/script/clater";
 
 // Api Data
 import { useGetApi } from "../../../api/useGetApi";
+import { loading } from "../Lodding";
+import ApiError from "../../../err/ApiError";
 
 
 
 export default function Nav() {
-    const { jsonData: catagoryData } = useGetApi("catagory");
+    const { jsonData: catagoryData , loading: catagoryLoading , error } = useGetApi("catagory");
     const { jsonData: subCatagoryData } = useGetApi("subcatagory");
     const catagory = catagoryData.length > 0 ? catagoryData : [];
     const subCatagory = subCatagoryData.length > 0 ? subCatagoryData : [];
-    console.log(subCatagory);
-
     const [openMenu, setOpenMenu] = useState(false);
 
+    catagoryLoading ? loading(true) : loading(false);
+    if (error) return <ApiError />;
 
     return (
         <>
@@ -70,11 +72,8 @@ export default function Nav() {
                         catagory.map((item) => (
                             <div key={item.id} className="openDrop">
                                 <button className="nav-listBtn">{clater(item.name)}</button>
-
-                                <div className="dropMenu flex center medel">
-
+                                <div className="dropMenu">
                                     <div>
-
                                         {
                                             subCatagory
                                                 .filter((sub) => sub.catagory_id === item.id)

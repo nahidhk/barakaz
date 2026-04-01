@@ -13,7 +13,7 @@ require_once 'config.php';
 
 
 
-// POST না JSON body support কর
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 $type = $data['type'] ?? $_POST['type'] ?? '';
@@ -24,14 +24,6 @@ if ($apiKey !== 'abc123') {
     echo json_encode(['error' => 'Invalid API key']);
     exit;
 }
-
-
-// $allowedTables = ['users', 'products', 'orders', 'cart'];
-
-// if (!in_array($table, $allowedTables)) {
-//     echo json_encode(['error' => 'Invalid table']);
-//     exit;
-// }
 
 if ($type === 'get') {
     try {
@@ -50,6 +42,56 @@ if ($type === 'get') {
             "message" => $e->getMessage()
         ]);
     }
-} else {
-    echo json_encode(['error' => 'Invalid request']);
+} 
+
+
+if ($type === 'post') {
+    $data = $data['data'] ?? $_POST['data'] ?? [];
+    if (empty($data)) {
+        echo json_encode(['error' => 'No data provided']);
+        exit;
+    }
+
+    try {
+        $columns = implode(", ", array_keys($data));
+        $placeholders = implode(", ", array_fill(0, count($data), "?"));
+        $stmt = $pdo->prepare("INSERT INTO `$table` ($columns) VALUES ($placeholders)");
+        $stmt->execute(array_values($data));
+
+        echo json_encode([
+            "status" => "success",
+            "message" => "Data inserted successfully"
+        ]);
+
+    } catch (PDOException $e) {
+        echo json_encode([
+            "status" => "error",
+            "message" => $e->getMessage()
+        ]);
+    }
+}
+
+
+if ($type === 'drop') {
+    $id = $data['data']['id'] ?? $_POST['id'] ?? null;
+    if (!$id) {
+        echo json_encode([['error' => $id]]);
+        exit;
+    }
+
+    try {
+        $stmt = $pdo->prepare("DELETE FROM `$table` WHERE id = ?");
+        $stmt->execute([$id]);
+
+        echo json_encode([
+            "status" => "success",
+            "message" => "Data deleted successfully"
+        ]);
+
+    } catch (PDOException $e) {
+        echo json_encode([
+            "status" => "error",
+            "message" => $e->getMessage()
+        ]);
+    }
 }

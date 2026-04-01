@@ -120,34 +120,44 @@ body {
   width: 90%;
 }
 
-.table {
+/* table csss */
+
+
+
+.table-container {
   width: 90%;
   margin: 20px auto;
-  border-collapse: collapse;
+  max-height: 60vh;
+  overflow-y: auto;
   border-radius: 12px;
-  overflow: hidden;
-  font-family: 'Segoe UI', sans-serif;
-  background: #ffffff;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffffff;
+}
+
 .table thead {
+  position: sticky;
+  top: 0;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: #fff;
+  z-index: 10;
 }
 
-.table th {
-  padding: 14px;
-  text-align: left;
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-}
-
+.table th,
 .table td {
   padding: 12px 14px;
   font-size: 14px;
-  color: #333;
+  text-align: left;
+}
+
+.table th {
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .table tbody tr:nth-child(even) {
@@ -176,6 +186,24 @@ body {
   border-top-right-radius: 12px;
 }
 
+.table-container::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Firefox */
+.table-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Optional: still scrollable */
+.table-container {
+  overflow-y: scroll;
+}
+
+
+/* -------- */
 .test {
   background-color: red;
 }
@@ -189,6 +217,146 @@ body {
   background-color: #fff;
   outline: none;
   margin: 10px;
+}
+
+.iconBtn {
+  background-color: #5ce6ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #000;
+  transition: all 0.3s, color 0.3s;
+  padding: 5px 10px;
+  height: 90%;
+  margin-left: 10px;
+  font-size: 13pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+
+/* ====================================================== Loading ================================================ */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  color: #398EB6;
+  position: relative;
+  animation: l40 .5s infinite alternate;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: 25px 25px;
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+}
+
+.loader:before {
+  background-image:
+    radial-gradient(farthest-side at top left, currentColor 96%, #0000),
+    radial-gradient(farthest-side at top right, currentColor 96%, #0000),
+    radial-gradient(farthest-side at bottom right, currentColor 96%, #0000),
+    radial-gradient(farthest-side at bottom left, currentColor 96%, #0000);
+  animation: l40-1 1s infinite;
+}
+
+.loader:after {
+  background-image:
+    radial-gradient(farthest-side at top left, #0000 94%, currentColor 96%),
+    radial-gradient(farthest-side at top right, #0000 94%, currentColor 96%),
+    radial-gradient(farthest-side at bottom right, #0000 94%, currentColor 96%),
+    radial-gradient(farthest-side at bottom left, #0000 94%, currentColor 96%);
+  animation: l40-2 1s infinite;
+}
+
+@keyframes l40-1 {
+
+  0%,
+  10%,
+  90%,
+  100% {
+    inset: 0
+  }
+
+  40%,
+  60% {
+    inset: -10px
+  }
+}
+
+@keyframes l40-2 {
+
+  0%,
+  40% {
+    transform: rotate(0)
+  }
+
+  60%,
+  100% {
+    transform: rotate(90deg)
+  }
+}
+
+/* ====================================================================================================================== */
+
+.fullPage {
+  height: 100vh;
+  width: 100%;
+}
+
+.index {
+  z-index: 999;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.darkSide {
+  background-color: #ffffff9e;
+}
+
+.top {
+  top: 0;
+}
+
+.left {
+  left: 0;
+}
+
+.loaderBox {
+  backdrop-filter: blur(5px);
+}
+
+.error {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffcccc;
+  color: #cc0000;
+  border: 1px solid #cc0000;
+  border-radius: 5px;
+  margin: 20px auto;
+  width: 90%;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #5ce6ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #000;
+  transition: all 0.3s, color 0.3s;
 }
 
 @media (max-width: 768px) {
