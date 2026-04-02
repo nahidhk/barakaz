@@ -363,10 +363,12 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 400px;
 }
 .beet {
   justify-content: space-between;
-}
+} 
+
 
 @media (max-width: 768px) {
   .table {

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { dropApi } from "../../api/dropApi";
 import { toast } from "react-toastify";
 import { editApi } from "../../api/editApi";
+import { RiCloseLargeLine } from "react-icons/ri";
+
 
 export default function Table({ maxdata, action }) {
-
+    const [showpopup, setShowPopup] = useState(false);
+    const [editData, setEditData] = useState({});
     action = action || {};
 
     if (!maxdata || maxdata.length === 0) {
@@ -43,23 +46,70 @@ export default function Table({ maxdata, action }) {
 
 
     const handelEdit = (poiter) => {
-        alert(JSON.stringify(poiter));
+        setShowPopup(true);
+        setEditData(poiter);
+    }
 
+    const handelEditCall = () => {
+        
+        const parpasData = { id: editData.id, name: editData.name };
+        const mycopelData = {
+            table: action.edit.tab,
+            data: parpasData
+        };
+    
+        editApi(mycopelData)
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.status === "success") {
+                   toast.success("Item edited successfully!");
+                     window.location.reload();
+                } else {
+                    toast.error("Failed to edit item: " + res[0].error);
+                }
+            })
+            .catch((error) => {
+                console.log("65" + error);
+                toast.error("An error occurred while editing the item.");
+            });
     }
 
     return (
         <>
-            <div className="flex medel center fixed top left fullPage index darkSide">
-                <div className="popup">
-                    <div className="flex medel beet">
-                        <div></div>
-                        <div>X</div>
+
+
+            {
+                showpopup && (
+
+                    <div className="flex medel w300 center fixed top left fullPage index darkSide">
+                        <div className="popup">
+                            <div className="flex medel beet">
+                                <div></div>
+                                <div onClick={() => setShowPopup(false)} className="iconBtn delete">
+                                    <RiCloseLargeLine />
+                                </div>
+                            </div>
+                            <div>
+                                {
+                                    Object.keys(editData).map((key) => (
+                                        <div key={key} className="flex column gap10">
+                                            <label>{key}</label>
+                                            <input className="input" onChange={(e) => setEditData({ ...editData, [key]: e.target.value })} value={editData[key]} type="text" />
+                                        </div>
+                                    ))
+                                }
+                                <div className="flex right gap10">
+                                    <button onClick={handelEditCall} className="btn">Save</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h2>Edit Item</h2>
-                    </div>
-                </div>
-            </div>
+
+
+                )
+            }
+
+
             <div class="table-container">
                 <table className="table animate__animated animate__fadeIn">
 
@@ -96,7 +146,7 @@ export default function Table({ maxdata, action }) {
                                         }
                                         {
                                             action.edit ? (
-                                                <button onClick={() => handelEdit({ tab: action.edit.tab, name: item.subcategory, id: item.id })} className="iconBtn">
+                                                <button onClick={() => handelEdit({ table: action.edit.tab, name: item.subcategory, id: item.id })} className="iconBtn">
                                                     <CiEdit />
                                                 </button>
                                             ) : null

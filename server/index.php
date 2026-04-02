@@ -25,6 +25,23 @@ if ($apiKey !== 'abc123') {
     exit;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if ($type === 'get') {
     try {
         $stmt = $pdo->prepare("SELECT * FROM `$table`");
@@ -43,6 +60,26 @@ if ($type === 'get') {
         ]);
     }
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if ($type === 'post') {
@@ -72,6 +109,27 @@ if ($type === 'post') {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if ($type === 'drop') {
     $id = $data['data']['id'] ?? $_POST['id'] ?? null;
     if (!$id) {
@@ -95,3 +153,49 @@ if ($type === 'drop') {
         ]);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if ($type === 'edit') {
+    $id = $data['data']['id'] ?? $_POST['id'] ?? null;
+    if (!$id) {
+        echo json_encode(['error' => 'No ID provided']);
+        exit;
+    }
+
+    try {
+        $setClause = implode(", ", array_map(fn($key) => "$key = ?", array_keys($data['data'])));
+        $stmt = $pdo->prepare("UPDATE `$table` SET $setClause WHERE id = ?");
+        $stmt->execute([...array_values($data['data']), $id]);
+
+        echo json_encode([
+            "status" => "success",
+            "message" => "Data updated successfully"
+        ]);
+
+    } catch (PDOException $e) {
+        echo json_encode([
+            "status" => "error",
+            "message" => $e->getMessage() ,
+            "data" => $setClause
+              ]);
+    }
+}
+
+
+
+
+
