@@ -3,7 +3,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { dropApi } from "../../api/dropApi";
 import { toast } from "react-toastify";
-
+import { editApi } from "../../api/editApi";
 
 export default function Table({ maxdata, action }) {
 
@@ -44,57 +44,71 @@ export default function Table({ maxdata, action }) {
 
     const handelEdit = (poiter) => {
         alert(JSON.stringify(poiter));
+
     }
 
     return (
-        <div class="table-container">
-            <table className="table animate__animated animate__fadeIn">
+        <>
+            <div className="flex medel center fixed top left fullPage index darkSide">
+                <div className="popup">
+                    <div className="flex medel beet">
+                        <div></div>
+                        <div>X</div>
+                    </div>
+                    <div>
+                        <h2>Edit Item</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container">
+                <table className="table animate__animated animate__fadeIn">
 
-                <thead>
-                    <tr>
+                    <thead>
+                        <tr>
+                            {
+                                headers.map((key) => (
+                                    <th key={key}>{key}</th>
+                                ))
+                            }
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
                         {
-                            headers.map((key) => (
-                                <th key={key}>{key}</th>
+                            maxdata.map((item, index) => (
+                                <tr key={index}>
+                                    {
+                                        headers.map((key) => (
+                                            <td key={key}>{item[key]}</td>
+                                        ))
+                                    }
+
+                                    <td className="flex center medel">
+                                        {
+                                            action.delete ? (
+                                                <button onClick={() => handelDelate({ tab: action.delete.tab, id: item.id })} className="iconBtn delete">
+                                                    <MdDeleteOutline />
+                                                </button>
+                                            ) : (
+                                                "..."
+                                            )
+                                        }
+                                        {
+                                            action.edit ? (
+                                                <button onClick={() => handelEdit({ tab: action.edit.tab, name: item.subcategory, id: item.id })} className="iconBtn">
+                                                    <CiEdit />
+                                                </button>
+                                            ) : null
+                                        }
+                                    </td>
+                                </tr>
                             ))
                         }
-                        <th>Action</th>
-                    </tr>
-                </thead>
+                    </tbody>
 
-                <tbody>
-                    {
-                        maxdata.map((item, index) => (
-                            <tr key={index}>
-                                {
-                                    headers.map((key) => (
-                                        <td key={key}>{item[key]}</td>
-                                    ))
-                                }
-
-                                <td className="flex center medel">
-                                    {
-                                        action.delete ? (
-                                            <button onClick={() => handelDelate({ tab: action.delete.tab, id: item.id })} className="iconBtn delete">
-                                                <MdDeleteOutline />
-                                            </button>
-                                        ) : (
-                                            "..."
-                                        )
-                                    }
-                                    {
-                                        action.edit ? (
-                                            <button onClick={() => handelEdit({tab: action.edit.tab, name: item.subcategory, id: item.id})} className="iconBtn">
-                                                <CiEdit />
-                                            </button>
-                                        ) : null
-                                    }
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-
-            </table>
-        </div>
+                </table>
+            </div>
+        </>
     )
 }
