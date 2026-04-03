@@ -5,25 +5,59 @@ import { useGetApi } from "../api/useGetApi";
 import { loading } from "../components/ui/Loadding";
 import { toast } from "react-toastify";
 import postApi from "../api/postApi";
+import formatDate from "../components/scripts/formatDate";
 
 export default function Category() {
-    const { jsonData: catagory = [], loading: loading1 } = useGetApi("catagory");
+
+    const { jsonData: catagory = [], loading: loading1, refetch: refetchCat } = useGetApi("catagory");
     const { jsonData: subCatagory = [], loading: loading2, refetch } = useGetApi("subcatagory");
 
     const loadingif = loading1 || loading2;
 
     const [view, setView] = useState("category");
+
+    // ✅ Category
+    const [catagoryData, setcatagoryData] = useState("");
+    const [filteredCategory, setFilteredCategory] = useState([]);
+
+    // ✅ SubCategory
     const [selectedCategory, setSelectedCategory] = useState("");
     const [inputData, setInputData] = useState("");
     const [filteredSub, setFilteredSub] = useState([]);
 
-    // ✅ FIX: loading useEffect এ
+    // =========================
+    // ✅ Loading
+    // =========================
     useEffect(() => {
         loading(loadingif);
     }, [loadingif]);
 
+    // =========================
+    // ✅ Category Filter
+    // =========================
     useEffect(() => {
-        let filtered = subCatagory || [];
+        let filtered = catagory;
+
+        if (catagoryData) {
+            filtered = filtered.filter((item) =>
+                item.name.toLowerCase().includes(catagoryData.toLowerCase())
+            );
+        }
+
+        const mapped = filtered.map((item) => ({
+            id: item.id,
+            name: item.name,
+            created_at: formatDate(item.created_at)
+        }));
+
+        setFilteredCategory(mapped);
+    }, [catagoryData, catagory]);
+
+    // =========================
+    // ✅ SubCategory Filter
+    // =========================
+    useEffect(() => {
+        let filtered = subCatagory;
 
         if (selectedCategory) {
             filtered = filtered.filter(
@@ -45,54 +79,97 @@ export default function Category() {
             return {
                 id: sub.id,
                 subcategory: sub.name,
-                category: `(${category?.id}) ${category?.name || "N/A"}`
+                category: `(${category?.id}) ${category?.name || "N/A"}`,
+                create: formatDate(sub.created_at)
             };
         });
 
         setFilteredSub(mapped);
     }, [selectedCategory, inputData, subCatagory, catagory]);
 
+    // =========================
+    // ✅ Add OR Search Category
+    // =========================
+    const handleCategory = () => {
+        const name = catagoryData.trim();
 
-
-    
-    const subPostPress = async () => {
-        if (!selectedCategory) {
-            toast.error("Please select a category first.");
+        if (!name) {
+            toast.error("Category name required");
             return;
         }
 
-        if (!inputData.trim()) {
-            toast.error("Subcategory name cannot be empty.");
+        // check exists
+        const exists = catagory.find(
+            (item) => item.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (exists) {
+            toast.info("Category already exists");
             return;
         }
 
-        const thisData = {
-            catagory_id: Number(selectedCategory),
-            name: inputData.trim()
-        };
-        postApi({ table: "subcatagory", data: thisData })
+        // add new
+        postApi({
+            table: "catagory",
+            data: { name }
+        })
             .then(res => {
-                if (!res.ok) throw new Error("Server Error " + res.status);
+                if (!res.ok) throw new Error("Server error");
                 return res.json();
             })
             .then(res => {
                 if (res.error) {
-                    toast.error("Error: " + res.error);
+                    toast.error(res.error);
+                } else {
+                    toast.success(res.message);
+                    setcatagoryData("");
+                    refetchCat();
+                }
+            })
+            .catch(err => console.log(err));
+    };
+
+    // =========================
+    // ✅ Add SubCategory
+    // =========================
+    const addSubCategory = () => {
+        if (!selectedCategory) {
+            toast.error("Select category first");
+            return;
+        }
+
+        if (!inputData.trim()) {
+            toast.error("Subcategory name required");
+            return;
+        }
+
+        postApi({
+            table: "subcatagory",
+            data: {
+                catagory_id: Number(selectedCategory),
+                name: inputData.trim()
+            }
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Server error");
+                return res.json();
+            })
+            .then(res => {
+                if (res.error) {
+                    toast.error(res.error);
                 } else {
                     toast.success(res.message);
                     setInputData("");
                     refetch();
                 }
-            }
-            )
+            })
             .catch(err => console.log(err));
     };
-
-
 
     return (
         <div className="flex center column gap20">
 
+            {/* 🔥 Top Buttons */}
             <div className="bar">
                 <button onClick={() => setView("category")}>
                     <TbCategoryPlus /> Category
@@ -103,63 +180,73 @@ export default function Category() {
                 </button>
             </div>
 
-            <div className="w100 flex center">
+            {/* ================= CATEGORY ================= */}
+            {view === "category" && (
+                <div className="w100 flex center column">
 
-                {view === "category" && (
-                    <div className="w100 flex center column">
-                        <div className="flex center">
-                            <input type="text" className="input" placeholder="Search Category..." />
-                        </div>
-                        <div className="w100 flex gap20 ">
-                            <Table maxdata={catagory} />
-                        </div>
+                    <div className="flex gap10 medel center w100">
+
+                        <input
+                            type="text"
+                            className="input"
+                            placeholder="Search or Add Category..."
+                            value={catagoryData}
+                            onChange={(e) => setcatagoryData(e.target.value)}
+                        />
+
+                        <button onClick={handleCategory} className="btn">
+                            Add
+                        </button>
+
                     </div>
-                )}
 
-                {view === "sub" && (
-                    <div className="w100 flex center column">
-                        <div className="w100 flex center">
-                            <div className="flex gap10">
+                    <Table
+                        maxdata={filteredCategory}
+                        action={{ delete: { tab: "catagory" }, edit: { tab: "catagory" } }}
+                    />
+                </div>
+            )}
 
-                                <select
-                                    value={selectedCategory}
-                                    onChange={(e) =>
-                                        setSelectedCategory(e.target.value)
-                                    }
-                                    className="input"
-                                >
-                                    <option value="">All Category</option>
+            {/* ================= SUB CATEGORY ================= */}
+            {view === "sub" && (
+                <div className="w100 flex center column">
 
-                                    {catagory.map((cat) => (
-                                        <option key={cat.id} value={cat.id}>
-                                            {cat.name}
-                                        </option>
-                                    ))}
-                                </select>
+                    <div className="flex gap10 medel center w100">
 
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="Search Sub Category..."
-                                    value={inputData}
-                                    onChange={(e) =>
-                                        setInputData(e.target.value)
-                                    }
-                                />
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="input"
+                        >
+                            <option value="">All Category</option>
 
-                                <div className="flex center medel">
-                                    <button onClick={subPostPress} className="btn margin">
-                                        <TbCategoryPlus /> Add Sub Category
-                                    </button>
-                                </div>
+                            {catagory.map((cat) => (
+                                <option key={cat.id} value={cat.id}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                        </select>
 
-                            </div>
-                        </div>
+                        <input
+                            type="text"
+                            className="input"
+                            placeholder="Search / Add SubCategory..."
+                            value={inputData}
+                            onChange={(e) => setInputData(e.target.value)}
+                        />
 
-                        <Table maxdata={filteredSub}  action={{delete:{tab:"subcatagory"} , edit:{tab:"subcatagory"}}}/>
+                        <button onClick={addSubCategory} className="btn">
+                            Add Sub
+                        </button>
+
                     </div>
-                )}
-            </div>
+
+                    <Table
+                        maxdata={filteredSub}
+                        action={{ delete: { tab: "subcatagory" }, edit: { tab: "subcatagory" } }}
+                    />
+                </div>
+            )}
         </div>
     );
 }

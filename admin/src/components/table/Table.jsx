@@ -51,19 +51,19 @@ export default function Table({ maxdata, action }) {
     }
 
     const handelEditCall = () => {
-        
+
         const parpasData = { id: editData.id, name: editData.name };
         const mycopelData = {
             table: action.edit.tab,
             data: parpasData
         };
-    
+
         editApi(mycopelData)
             .then((res) => res.json())
             .then((res) => {
                 if (res.status === "success") {
-                   toast.success("Item edited successfully!");
-                     window.location.reload();
+                    toast.success("Item edited successfully!");
+                    window.location.reload();
                 } else {
                     toast.error("Failed to edit item: " + res[0].error);
                 }
@@ -73,6 +73,8 @@ export default function Table({ maxdata, action }) {
                 toast.error("An error occurred while editing the item.");
             });
     }
+
+    const disabledKeys = ["id", "table"];
 
     return (
         <>
@@ -94,7 +96,7 @@ export default function Table({ maxdata, action }) {
                                     Object.keys(editData).map((key) => (
                                         <div key={key} className="flex column gap10">
                                             <label>{key}</label>
-                                            <input className="input" onChange={(e) => setEditData({ ...editData, [key]: e.target.value })} value={editData[key]} type="text" />
+                                            <input className="input" onChange={(e) => setEditData({ ...editData, [key]: e.target.value })} disabled={disabledKeys.includes(key)} value={editData[key]} type="text" />
                                         </div>
                                     ))
                                 }
@@ -146,7 +148,7 @@ export default function Table({ maxdata, action }) {
                                         }
                                         {
                                             action.edit ? (
-                                                <button onClick={() => handelEdit({ table: action.edit.tab, name: item.subcategory, id: item.id })} className="iconBtn">
+                                                <button onClick={() => handelEdit({ table: action.edit.tab, id: item.id , name: item.subcategory})} className="iconBtn">
                                                     <CiEdit />
                                                 </button>
                                             ) : null
