@@ -80,7 +80,7 @@ export default function Category() {
                 id: sub.id,
                 subcategory: sub.name,
                 category: `(${category?.id}) ${category?.name || "N/A"}`,
-                create: formatDate(sub.created_at)
+                created_at: formatDate(sub.created_at)
             };
         });
 
@@ -243,7 +243,11 @@ export default function Category() {
 
                     <Table
                         maxdata={filteredSub}
-                        action={{ delete: { tab: "subcatagory" }, edit: { tab: "subcatagory" } }}
+                        action={{
+                            delete: { tab: "subcatagory" }, edit: {
+                                tab: "subcatagory", allowedKeys: ["name"]
+                            }
+                        }}
                     />
                 </div>
             )}

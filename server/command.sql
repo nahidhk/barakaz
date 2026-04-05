@@ -22,3 +22,9 @@ create table subcatagory (
     created_at timestamp default current_timestamp,
     foreign key (catagory_id) references catagory(id)
 )
+
+CREATE TABLE adslink (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    imgname VARCHAR(255) NOT NULL,
+    is_visible BOOLEAN NOT NULL DEFAULT TRUE
+);

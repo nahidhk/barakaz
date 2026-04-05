@@ -1,6 +1,7 @@
 import React from "react";
 import { TbBrandMercedes } from "react-icons/tb";
 import { MdOutlineCategory } from "react-icons/md";
+import { TfiGallery } from "react-icons/tfi";
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,10 +16,6 @@ export default function SideBar() {
         navigate("/category");
     };
 
-    const handleSubCategoryClick = () => {
-        navigate("/subcategory");
-    };
-
     return (
         <>
             <div className="sideBar">
@@ -27,6 +24,9 @@ export default function SideBar() {
                 </button>
                 <button className="sidebar-button" onClick={handleCategoryClick}>
                     <MdOutlineCategory className="icon" />  Category
+                </button>
+                <button className="sidebar-button" onClick={() => navigate("/product-ads")}>
+                    <TfiGallery className="icon" />  Product Ads
                 </button>
             </div>
         </>

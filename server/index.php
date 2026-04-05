@@ -10,38 +10,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 require_once 'config.php';
-
-
-
-
 $data = json_decode(file_get_contents("php://input"), true);
-
 $type = $data['type'] ?? $_POST['type'] ?? '';
 $table = $data['table'] ?? $_POST['table'] ?? '';
 $apiKey = $data['key'] ?? $_POST['key'] ?? '';
-
 if ($apiKey !== 'abc123') {
-    echo json_encode(['error' => 'Invalid API key']);
+    echo json_encode([
+        "status" => "error",
+        "code" => 401,
+        "message" => "Invalid API key , this incident will be reported. the server admin is NdSQL",
+        "contact" => "nahidhk2007@gmail.com"
+    ]);
     exit;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if ($type === 'get') {
     try {
         $stmt = $pdo->prepare("SELECT * FROM `$table`");
@@ -60,27 +41,6 @@ if ($type === 'get') {
         ]);
     }
 } 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 if ($type === 'post') {
     $data = $data['data'] ?? $_POST['data'] ?? [];
@@ -108,28 +68,6 @@ if ($type === 'post') {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if ($type === 'drop') {
     $id = $data['data']['id'] ?? $_POST['id'] ?? null;
     if (!$id) {
@@ -154,32 +92,17 @@ if ($type === 'drop') {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if ($type === 'edit') {
-    $id = $data['data']['id'] ?? $_POST['id'] ?? null;
+    $id = $data['data']['data']['id'] ?? $_POST['id'] ?? null;
     if (!$id) {
         echo json_encode(['error' => 'No ID provided']);
         exit;
     }
 
     try {
-        $setClause = implode(", ", array_map(fn($key) => "$key = ?", array_keys($data['data'])));
+        $setClause = implode(", ", array_map(fn($key) => "$key = ?", array_keys($data['data']['data'])));
         $stmt = $pdo->prepare("UPDATE `$table` SET $setClause WHERE id = ?");
-        $stmt->execute([...array_values($data['data']), $id]);
+        $stmt->execute([...array_values($data['data']['data']), $id]);
 
         echo json_encode([
             "status" => "success",
@@ -189,8 +112,7 @@ if ($type === 'edit') {
     } catch (PDOException $e) {
         echo json_encode([
             "status" => "error",
-            "message" => $e->getMessage() ,
-            "data" => $setClause
+            "message" => $e->getMessage() 
               ]);
     }
 }

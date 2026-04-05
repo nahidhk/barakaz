@@ -7,9 +7,15 @@ import { editApi } from "../../api/editApi";
 import { RiCloseLargeLine } from "react-icons/ri";
 
 
+const sampuleData = { id: 1, name: "John Doe", email: "john@example.com" };
+
+
+
+
 export default function Table({ maxdata, action }) {
     const [showpopup, setShowPopup] = useState(false);
     const [editData, setEditData] = useState({});
+    const notjsonCall = ["created_at", "updated_at"];
     action = action || {};
 
     if (!maxdata || maxdata.length === 0) {
@@ -51,13 +57,20 @@ export default function Table({ maxdata, action }) {
     }
 
     const handelEditCall = () => {
-
-        const parpasData = { id: editData.id, name: editData.name };
+        const notjsonCall = ["created_at", "updated_at"];
+        const coreectJson = Object.keys(editData.data)
+            .filter(key => !notjsonCall.includes(key))
+            .reduce((acc, key) => {
+                acc[key] = editData.data[key];
+                return acc;
+            }, {});
+        const parpasData = { id: editData.id, data: coreectJson };
         const mycopelData = {
             table: action.edit.tab,
             data: parpasData
         };
 
+        alert(JSON.stringify(mycopelData))
         editApi(mycopelData)
             .then((res) => res.json())
             .then((res) => {
@@ -65,16 +78,17 @@ export default function Table({ maxdata, action }) {
                     toast.success("Item edited successfully!");
                     window.location.reload();
                 } else {
-                    toast.error("Failed to edit item: " + res[0].error);
+                    toast.error(res);
                 }
+                console.log(res);
             })
             .catch((error) => {
-                console.log("65" + error);
+                console.log(error);
                 toast.error("An error occurred while editing the item.");
             });
     }
 
-    const disabledKeys = ["id", "table"];
+    const disabledKeys = ["id", "table", "created_at", "updated_at"];
 
     return (
         <>
@@ -93,10 +107,10 @@ export default function Table({ maxdata, action }) {
                             </div>
                             <div>
                                 {
-                                    Object.keys(editData).map((key) => (
+                                    Object.keys(editData.data).map((key) => (
                                         <div key={key} className="flex column gap10">
                                             <label>{key}</label>
-                                            <input className="input" onChange={(e) => setEditData({ ...editData, [key]: e.target.value })} disabled={disabledKeys.includes(key)} value={editData[key]} type="text" />
+                                            <input className="input" onChange={(e) => setEditData({ ...editData, data: { ...editData.data, [key]: e.target.value } })} disabled={disabledKeys.includes(key)} value={editData.data[key]} type="text" style={{ cursor: disabledKeys.includes(key) ? 'not-allowed' : 'default' }} />
                                         </div>
                                     ))
                                 }
@@ -148,7 +162,7 @@ export default function Table({ maxdata, action }) {
                                         }
                                         {
                                             action.edit ? (
-                                                <button onClick={() => handelEdit({ table: action.edit.tab, id: item.id , name: item.subcategory})} className="iconBtn">
+                                                <button onClick={() => handelEdit({ table: action.edit.tab, data: item })} className="iconBtn">
                                                     <CiEdit />
                                                 </button>
                                             ) : null
