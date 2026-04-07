@@ -118,6 +118,43 @@ if ($type === 'edit') {
 }
 
 
+if ($type === 'upload') {
 
+    if (!isset($_FILES['file'])) {
+        echo json_encode(['error' => 'No file uploaded']);
+        exit;
+    }
 
+    $file = $_FILES['file'];
 
+    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $newFileName = uniqid("img_", true) . "." . $ext;
+
+    $uploadPath = "uploads/" . $newFileName;
+
+    if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+
+        try {
+            $stmt = $pdo->prepare("INSERT INTO `$table` (imgname) VALUES (?)");
+            $stmt->execute([$newFileName]);
+
+            echo json_encode([
+                "status" => "success",
+                "file" => $newFileName
+            ]);
+
+        } catch (PDOException $e) {
+            echo json_encode([
+                "status" => "error",
+                "message" => $e->getMessage()
+            ]);
+        }
+
+    } else {
+        echo json_encode([
+            "error" => "Upload failed"
+        ]);
+    }
+
+    exit;
+}
