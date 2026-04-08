@@ -87,7 +87,7 @@ export default function ImageSlider() {
                                 <tr>
                                     <th>ID</th>
                                     <th>Photo</th>
-                                    <th>Action</th>
+                                    <th>Visible</th>
                                 </tr>
                             </thead>
                             <tbody>

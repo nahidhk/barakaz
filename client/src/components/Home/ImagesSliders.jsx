@@ -1,28 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useGetApi } from "../../api/useGetApi";
+import api from "../../api/api.json";
 
 export default function ImagesSliders() {
-    const slides = [
+    const { jsonData: imgData } = useGetApi("adslink");
+    const slides = imgData.map(item => (
         {
-            id: 1,
-            "url": "https://images.unsplash.com/photo-1590595978583-3967cf17d2ea",
-            "call": "url call"
-        },
-        {
-            id: 2,
-            "url": "https://images.unsplash.com/photo-1588807308097-fb6e5047df8c",
-            "call": "url call"
-        },
-        {
-            id: 3,
-            "url": "https://images.unsplash.com/photo-1589808710416-24cf7ac026f2",
-            "call": "url call"
-        },
-        {
-            id: 4,
-            "url": "https://images.unsplash.com/photo-1588796388882-a4d533c47e5e",
-            "call": "url call"
+            id: item.id,
+            url: api.baseUrl+'uploads/'+item.imgname
         }
-    ];
+    ))
     const [currentSlide, setCurrentSlide] = useState(0);
     // auto slide
     useEffect(() => {
