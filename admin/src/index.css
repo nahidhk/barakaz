@@ -368,6 +368,18 @@ body {
 .beet {
   justify-content: space-between;
 } 
+.tableImg{
+  height: 100px;
+  width: 100px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+}
+.swIcon{
+  font-size: 30pt;
+}
+.swTrue{
+  color: #4680ff;
+}
 
 
 @media (max-width: 768px) {

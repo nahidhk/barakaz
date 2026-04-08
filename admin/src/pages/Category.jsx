@@ -16,24 +16,24 @@ export default function Category() {
 
     const [view, setView] = useState("category");
 
-    // ✅ Category
+    //  Category
     const [catagoryData, setcatagoryData] = useState("");
     const [filteredCategory, setFilteredCategory] = useState([]);
 
-    // ✅ SubCategory
+    // SubCategory
     const [selectedCategory, setSelectedCategory] = useState("");
     const [inputData, setInputData] = useState("");
     const [filteredSub, setFilteredSub] = useState([]);
 
     // =========================
-    // ✅ Loading
+    //  Loading
     // =========================
     useEffect(() => {
         loading(loadingif);
     }, [loadingif]);
 
     // =========================
-    // ✅ Category Filter
+    //  Category Filter
     // =========================
     useEffect(() => {
         let filtered = catagory;
@@ -54,7 +54,7 @@ export default function Category() {
     }, [catagoryData, catagory]);
 
     // =========================
-    // ✅ SubCategory Filter
+    // SubCategory Filter
     // =========================
     useEffect(() => {
         let filtered = subCatagory;
@@ -88,7 +88,7 @@ export default function Category() {
     }, [selectedCategory, inputData, subCatagory, catagory]);
 
     // =========================
-    // ✅ Add OR Search Category
+    //  Add OR Search Category
     // =========================
     const handleCategory = () => {
         const name = catagoryData.trim();
@@ -130,7 +130,7 @@ export default function Category() {
     };
 
     // =========================
-    // ✅ Add SubCategory
+    //  Add SubCategory
     // =========================
     const addSubCategory = () => {
         if (!selectedCategory) {
@@ -169,7 +169,7 @@ export default function Category() {
     return (
         <div className="flex center column gap20">
 
-            {/* 🔥 Top Buttons */}
+            {/*  Top Buttons */}
             <div className="bar">
                 <button onClick={() => setView("category")}>
                     <TbCategoryPlus /> Category

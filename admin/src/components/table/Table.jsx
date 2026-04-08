@@ -70,7 +70,7 @@ export default function Table({ maxdata, action }) {
             data: parpasData
         };
 
-        alert(JSON.stringify(mycopelData))
+         alert(JSON.stringify(mycopelData))
         editApi(mycopelData)
             .then((res) => res.json())
             .then((res) => {
