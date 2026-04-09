@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import uploadApi from "../api/uploadApi";
 import api from "../api/api.json";
 import { toast } from "react-toastify";
 import { useGetApi } from "../api/useGetApi";
 import { LiaToggleOnSolid, LiaToggleOffSolid } from "react-icons/lia";
 import { editApi } from "../api/editApi";
+import { loading } from "../components/ui/Loadding"
 
 
 export default function ImageSlider() {
@@ -12,7 +13,7 @@ export default function ImageSlider() {
     const [handelImg, setHandelimg] = useState(null);
 
     const uploads = async () => {
-        if (!uploadimage) return alert("Select a file");
+        if (!uploadimage) return toast.error("Select a file");
 
         const formData = new FormData();
         formData.append("type", "upload");
@@ -34,13 +35,15 @@ export default function ImageSlider() {
 
 
     const db = "adslink";
-    const { jsonData: adslink } = useGetApi(db)
-
+    const { jsonData: adslink = [], loading: xi } = useGetApi(db)
+    useEffect(() => {
+        loading(xi);
+    }, [xi]);
     // Api managemant
     const path = "uploads/";
     const server = api.baseUrl + path;
     const handelvislue = (data) => {
-      //  alert(JSON.stringify(data))
+        //  alert(JSON.stringify(data))
         editApi(data)
             .then((res) => res.json())
             .then((res) => {

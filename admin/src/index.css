@@ -358,6 +358,7 @@ body {
   color: #000;
   transition: all 0.3s, color 0.3s;
 }
+
 .popup {
   background-color: #fff;
   padding: 20px;
@@ -365,19 +366,27 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   width: 400px;
 }
+
 .beet {
   justify-content: space-between;
-} 
-.tableImg{
+}
+
+.tableImg {
   height: 100px;
   width: 100px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 10px;
+  background-image: url("./asset/lg.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
-.swIcon{
+
+.swIcon {
   font-size: 30pt;
 }
-.swTrue{
+
+.swTrue {
   color: #4680ff;
 }
 
