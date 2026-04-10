@@ -42,7 +42,7 @@ export default function ImagesSliders() {
 
    
     if (slides.length === 0) {
-        return <p style={{ textAlign: "center" }}>Loadding.......</p>;
+        return <p style={{ textAlign: "center" }}>Please wait.......</p>;
     }
 
     return (

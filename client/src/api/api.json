@@ -1,4 +1,4 @@
 {
     "apikey": "abc123",
-    "baseUrl": "http://localhost:8000/"
+    "baseUrl": "http://192.168.2.106:8000/"
 }
