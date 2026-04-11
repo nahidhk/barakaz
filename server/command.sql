@@ -28,3 +28,30 @@ CREATE TABLE adslink (
     imgname VARCHAR(255) NOT NULL,
     is_visible BOOLEAN NOT NULL DEFAULT TRUE
 );
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    
+    products_category_id INT NOT NULL,
+    products_subcategory_id INT NOT NULL,
+    
+    products_image VARCHAR(255),
+    products_name VARCHAR(255) NOT NULL,
+    products_badge VARCHAR(100),
+    
+    products_new_price DECIMAL(10,2) NOT NULL,
+    products_old_price DECIMAL(10,2),
+    
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Foreign Keys
+    FOREIGN KEY (products_category_id) 
+    REFERENCES catagory(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    FOREIGN KEY (products_subcategory_id) 
+    REFERENCES subcatagory(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);

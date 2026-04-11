@@ -2,6 +2,8 @@ import React from "react";
 import { TbBrandMercedes } from "react-icons/tb";
 import { MdOutlineCategory } from "react-icons/md";
 import { TfiGallery } from "react-icons/tfi";
+import { PiDressLight } from "react-icons/pi";
+
 
 import { useNavigate } from "react-router-dom";
 
@@ -27,6 +29,9 @@ export default function SideBar() {
                 </button>
                 <button className="sidebar-button" onClick={() => navigate("/product-ads")}>
                     <TfiGallery className="icon" />  Product Ads
+                </button>
+                <button className="sidebar-button" onClick={() => navigate("/product")}>
+                    <PiDressLight className="icon" />  Product
                 </button>
             </div>
         </>

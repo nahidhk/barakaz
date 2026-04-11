@@ -8,6 +8,7 @@ import Category from "./pages/Category";
 import Loading from "./components/ui/Loadding";
 import ImageSlider from "./pages/ImageSlider";
 import Toast from "./components/package/Tosta";
+import Product from "./pages/Product";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/category" element={<Category />} />
             <Route path="/product-ads" element={<ImageSlider />} />
+            <Route path="/product" element={<Product />} />
           </Routes>
           <Loading />
           <Toast />

@@ -1,39 +1,57 @@
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
+import { useGetApi } from "../../api/useGetApi";
+import { BsChevronCompactRight } from "react-icons/bs";
+import api from "../../api/api.json"
 
 
 export default function Poduct() {
+
+    const { jsonData: catagory, loading: loading1 } = useGetApi("catagory");
+    const { jsonData: subCatagory, loading: loading2 } = useGetApi("subcatagory");
+    const { jsonData: products, loading: loading3 } = useGetApi("products");
+    const server = api.baseUrl+"uploads/";
+
     return (
-        <div className="flex center medel">
-            <div className="card flex column">
-              <div>
-                  <img className="product" src="https://img.drz.lazcdn.com/static/bd/p/d158810e5e631b7485d78018b961dde6.jpg_720x720q80.jpg_.webp" alt="Products" />
-              </div>
-                <div className="poduct_info">
-                    <div className="flex beet medel">
-                        <span className="p_title">
-                            Hello Wlord!
-                        </span>
-                        <div className="lovIcon flex center medel pointer">
+        <div className="container">
+            {
+                products.map(item => (
+                    <div key={item.id} className="card">
+                        <div className="card-badge">
+                            {item.products_badge}
+                        </div>
+                        <div className="card-wishlist flex medel center">
                             <FaRegHeart />
                         </div>
-                    </div>
-                    <div className="flex medel around gap20 price">
-                        <div>
-                            150 BDT
-                        </div>
-                        <div className="flex medel">
-                            <div className="status in"></div>
-                            <div>
-                                In Stock
+                        <div className="card-image" style={{ backgroundImage: `url("${server+item.products_image}")` }} />
+                        <div className="card-content">
+                            <p className="card-category flex center medel">
+                                {
+                                    catagory.find(cat => cat.id === item.products_category_id)?.name || "loadding...."
+                                }
+                                <BsChevronCompactRight />
+                                <span className="subCateg">
+                                    {
+                                        subCatagory.find(sub => sub.id === item.products_subcategory_id)?.name
+                                    }
+                                </span>
+                            </p>
+                            <h2 className="card-title">
+                                {item.products_name}
+                            </h2>
+                            <div className="card-price">
+                                <span className="old-price">
+                                    ${item.products_old_price}
+                                </span>
+                                ${item.products_old_price}
                             </div>
+                            <a href="#" className="card-btn">Buy Now</a>
                         </div>
                     </div>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis nam perspiciatis quia perferendis dolor ducimus tenetur maiores natus velit pariatur quam expedita maxime optio, sit consequuntur, placeat hic consequatur nemo?
-                    </p>
-                </div>
-            </div>
+                ))
+            }
+
+
         </div>
     )
 }
