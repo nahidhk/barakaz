@@ -7,7 +7,7 @@ import { editApi } from "../../api/editApi";
 import { RiCloseLargeLine } from "react-icons/ri";
 
 
-const sampuleData = { id: 1, name: "John Doe", email: "john@example.com" };
+
 
 
 

@@ -20,13 +20,14 @@ function App() {
           <SideBar />
         </div>
         <div className="w100">
+          <Loading />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/category" element={<Category />} />
             <Route path="/product-ads" element={<ImageSlider />} />
             <Route path="/product" element={<Product />} />
           </Routes>
-          <Loading />
+          
           <Toast />
         </div>
       </div>
