@@ -4,6 +4,8 @@ import api from "../api/api.json";
 import { loading } from "../components/ui/Loadding";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import { RiCloseLargeFill } from "react-icons/ri";
+import { MdOutlineCloudUpload } from "react-icons/md";
 
 export default function Product() {
     const { jsonData: product, loading: l1 } = useGetApi("products");
@@ -14,28 +16,65 @@ export default function Product() {
         loading(load);
     }, [load])
     const server = api.baseUrl + "uploads/";
-    const [cateData, setCateData] = useState("")
+    const [tubSub, setTubSub] = useState([])
+    const [popup, setPopup] = useState(false);
+
+    const selectCate = (data) => {
+        setTubSub(subC.filter(item => JSON.stringify(item.catagory_id) === data))
+    }
+
+
+
     return (
         <>
             <div className="flex center medel w100 column">
-                <div className="flex center medel">
-                    <select onChange={(e) => setCateData(e.target.value)} className="input">
-                        <option selected disabled value="">Select Catagory</option>
-                        {
-                            catege.map(cate => (
-                                <option value={cate.id} key={cate.id}>{cate.name}</option>
-                            ))
-                        }
-                    </select>
-                    <select className="input">
-                        <option selected disabled value="">Select Sub Catagory</option>
-                        {
-                            subC.map(item => (
-                                <option key={item.id}>{subC.filter(catei => catei.catagory_id === cateData)?.name}</option>
-                            ))
-                        }
-                    </select>
+                <div className="bar">
+                    <button onClick={() => setPopup(true)} className="btn">
+                        <MdOutlineCloudUpload />  Product Upload
+                    </button>
                 </div>
+                {
+                    popup ? (
+                        <div className="index fixed top left flex center fullPage medel darkSide loaderBox">
+                            <div className="flex center medel popup column">
+                                <div className="flex beet w100">
+                                    <div></div>
+                                    <div onClick={() => setPopup(false)} style={{ backgroundColor: "red", color: "#fff" }} className="btn flex center medel">
+                                        <RiCloseLargeFill />
+                                    </div>
+                                </div>
+                                <select onChange={(e) => selectCate(e.target.value)} className="input">
+                                    <option selected disabled value="">Select Catagory *</option>
+                                    {
+                                        catege.map(cate => (
+                                            <option value={cate.id} key={cate.id}>{cate.name}</option>
+                                        ))
+                                    }
+                                </select>
+                                <select className="input">
+                                    <option selected disabled value="">Select Sub Catagory *</option>
+                                    {
+                                        tubSub.map(item => <option key={item.id} value={item.id}>{item.name}</option>)
+                                    }
+                                </select>
+                                <select className="input">
+                                    <option value="">Select Tag</option>
+                                </select>
+                                <input type="text" className="input" placeholder="Input product name *" />
+                                <input type="number" className="input" placeholder="Input old price *" />
+                                <input type="number" className="input" placeholder="Input new price *" />
+                                <div className="flex around">
+                                    <div>
+                                        <input type="file" className="input" />
+                                    </div>
+                                    <div>
+                                        demo
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : null
+                }
                 <div className="table-container">
                     <table className="table">
                         <thead>
