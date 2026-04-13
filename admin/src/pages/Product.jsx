@@ -38,7 +38,11 @@ export default function Product() {
                         <div className="index fixed top left flex center fullPage medel darkSide loaderBox">
                             <div className="flex center medel popup column">
                                 <div className="flex beet w100">
-                                    <div></div>
+                                    <div>
+                                        <small>
+                                            (*) required
+                                        </small>
+                                    </div>
                                     <div onClick={() => setPopup(false)} style={{ backgroundColor: "red", color: "#fff" }} className="btn flex center medel">
                                         <RiCloseLargeFill />
                                     </div>
@@ -57,9 +61,9 @@ export default function Product() {
                                         tubSub.map(item => <option key={item.id} value={item.id}>{item.name}</option>)
                                     }
                                 </select>
-                                <select className="input">
-                                    <option value="">Select Tag</option>
-                                </select>
+                                <input className="input" placeholder="Input tags (optional)" />
+
+
                                 <input type="text" className="input" placeholder="Input product name *" />
                                 <input type="number" className="input" placeholder="Input old price *" />
                                 <input type="number" className="input" placeholder="Input new price *" />

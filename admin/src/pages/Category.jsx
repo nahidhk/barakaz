@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import postApi from "../api/postApi";
 import formatDate from "../components/scripts/formatDate";
 
+
 export default function Category() {
 
     const { jsonData: catagory = [], loading: loading1, refetch: refetchCat } = useGetApi("catagory");
