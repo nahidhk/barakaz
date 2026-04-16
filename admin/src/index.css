@@ -403,6 +403,12 @@ body {
     transform: scale(1);
   }
 }
+.in_bor{
+  width: 80%;
+  border-bottom: 1px dashed #d0d0d0;
+  padding: 6px;
+  margin: 6px;
+}
 
 @media (max-width: 768px) {
   .table {

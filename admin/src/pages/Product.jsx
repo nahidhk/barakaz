@@ -11,7 +11,8 @@ export default function Product() {
     const { jsonData: product, loading: l1 } = useGetApi("products");
     const { jsonData: catege, loading: l2 } = useGetApi("catagory");
     const { jsonData: subC, loading: l3 } = useGetApi("subcatagory");
-    const load = l1 || l2 || l3;
+    const { jsonData: tags, loading: l4 } = useGetApi("tags");
+    const load = l1 || l2 || l3 || l4;
     useEffect(() => {
         loading(load);
     }, [load])
@@ -103,11 +104,12 @@ export default function Product() {
                                             <img className="tableImg" src={server + item.products_image} />
                                         </td>
                                         <td>
-                                            <p><b>Name :</b> {item.products_name}</p>
-                                            <p><b>Category : </b> {catege.find(cat => cat.id === item.products_category_id)?.name} </p>
-                                            <p><b>Sub Category : </b>{subC.find(sub => sub.id === item.products_subcategory_id)?.name}</p>
-                                            <p><b>Old price : </b>৳{item.products_old_price}</p>
-                                            <p><b>Price : </b>৳{item.products_new_price}</p>
+                                            <p className="in_bor"><b>Name :</b> {item.products_name}</p>
+                                            <p className="in_bor"><b>Category : </b> {catege.find(cat => cat.id === item.products_category_id)?.name} </p>
+                                            <p className="in_bor"><b>Sub Category : </b>{subC.find(sub => sub.id === item.products_subcategory_id)?.name}</p>
+                                            <p className="in_bor"><b>Old price : </b>৳{item.products_old_price}</p>
+                                            <p className="in_bor"><b>Price : </b>৳{item.products_new_price}</p>
+                                            <p className="in_bor"><b>Tags : </b>{tags.find(tag => tag.id === item.products_badge_id)?.name}</p>
                                         </td>
                                         <td>
                                             <div className="flex center medel">
