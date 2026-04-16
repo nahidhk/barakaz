@@ -390,6 +390,19 @@ body {
   color: #4680ff;
 }
 
+.ani {
+  animation: animation 0.1s;
+}
+
+@keyframes animation {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
 
 @media (max-width: 768px) {
   .table {

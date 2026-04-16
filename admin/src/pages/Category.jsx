@@ -6,14 +6,17 @@ import { loading } from "../components/ui/Loadding";
 import { toast } from "react-toastify";
 import postApi from "../api/postApi";
 import formatDate from "../components/scripts/formatDate";
+import { IoPricetagsOutline } from "react-icons/io5";
+
 
 
 export default function Category() {
 
     const { jsonData: catagory = [], loading: loading1, refetch: refetchCat } = useGetApi("catagory");
     const { jsonData: subCatagory = [], loading: loading2, refetch } = useGetApi("subcatagory");
+     const { jsonData: tags = [], loading: loading3, refetch : rTag } = useGetApi("tags");
 
-    const loadingif = loading1 || loading2;
+    const loadingif = loading1 || loading2 || loading3;
 
     const [view, setView] = useState("category");
 
@@ -179,6 +182,11 @@ export default function Category() {
                 <button onClick={() => setView("sub")}>
                     <TbCategoryPlus /> Sub Category
                 </button>
+
+                <button onClick={() => setView("tag")}>
+                    <IoPricetagsOutline /> Tags
+                </button>
+
             </div>
 
             {/* ================= CATEGORY ================= */}
@@ -252,6 +260,32 @@ export default function Category() {
                     />
                 </div>
             )}
+            {
+                view === "tag" && (
+                    <div className="w100 flex center column">
+
+                        <div className="flex gap10 medel center w100">
+
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="Search or Add Tags..."
+                                
+                            />
+
+                            <button onClick={handleCategory} className="btn">
+                                Add
+                            </button>
+
+                        </div>
+
+                        <Table
+                            maxdata={tags}
+                            action={{ delete: { tab: "tags" }, edit: { tab: "tags" } }}
+                        />
+                    </div>
+                )
+            }
         </div>
     );
 }

@@ -35,7 +35,7 @@ export default function Product() {
                 </div>
                 {
                     popup ? (
-                        <div className="index fixed top left flex center fullPage medel darkSide loaderBox">
+                        <div className="index fixed top left flex center fullPage medel darkSide loaderBox ani">
                             <div className="flex center medel popup column">
                                 <div className="flex beet w100">
                                     <div>
@@ -61,7 +61,9 @@ export default function Product() {
                                         tubSub.map(item => <option key={item.id} value={item.id}>{item.name}</option>)
                                     }
                                 </select>
-                                <input className="input" placeholder="Input tags (optional)" />
+                                <select className="input">
+                                    <option selected disabled>Input tags (optional)</option>
+                                </select>
 
 
                                 <input type="text" className="input" placeholder="Input product name *" />
@@ -70,9 +72,6 @@ export default function Product() {
                                 <div className="flex around">
                                     <div>
                                         <input type="file" className="input" />
-                                    </div>
-                                    <div>
-                                        demo
                                     </div>
                                 </div>
                             </div>

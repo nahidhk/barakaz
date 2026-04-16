@@ -37,7 +37,7 @@ CREATE TABLE products (
     
     products_image VARCHAR(255),
     products_name VARCHAR(255) NOT NULL,
-    products_badge VARCHAR(100),
+    products_badge_id INT,
     
     products_new_price DECIMAL(10,2) NOT NULL,
     products_old_price DECIMAL(10,2),
@@ -54,4 +54,16 @@ CREATE TABLE products (
     REFERENCES subcatagory(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
+
+    FOREIGN KEY (products_badge_id) 
+    REFERENCES tags(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
+
+CREATE TABLE tags(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+)
