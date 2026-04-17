@@ -10,7 +10,6 @@ import { loading } from "../components/ui/Loadding"
 
 export default function ImageSlider() {
     const [uploadimage, setuploadImg] = useState(null);
-    const [handelImg, setHandelimg] = useState(null);
 
     const uploads = async () => {
         if (!uploadimage) return toast.error("Select a file");
@@ -79,9 +78,7 @@ export default function ImageSlider() {
                         </button>
                     </div>
 
-                    {handelImg && (
-                        <img src={handelImg} alt="preview" width="200" />
-                    )}
+                 
                 </div>
                 <div className="flex center medel">
                     <div class="table-container">

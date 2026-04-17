@@ -3,6 +3,10 @@ import { FaRegHeart } from "react-icons/fa";
 import { useGetApi } from "../../api/useGetApi";
 import { BsChevronCompactRight } from "react-icons/bs";
 import api from "../../api/api.json"
+import loadingImg from "../../asset/img/lg.gif";
+import LoadingCard from "../web/ui/LoadingCard";
+
+
 
 
 export default function Poduct() {
@@ -10,20 +14,27 @@ export default function Poduct() {
     const { jsonData: catagory, loading: loading1 } = useGetApi("catagory");
     const { jsonData: subCatagory, loading: loading2 } = useGetApi("subcatagory");
     const { jsonData: products, loading: loading3 } = useGetApi("products");
-    const server = api.baseUrl+"uploads/";
+    const { jsonData: tags, loading: loading4 } = useGetApi('tags');
+    const load = loading1 || loading2 || loading3 || loading4;
+    const server = api.baseUrl + "uploads/";
 
     return (
         <div className="container">
             {
+                load && (
+                    <LoadingCard />
+                )
+            }
+            {
                 products.map(item => (
                     <div key={item.id} className="card">
                         <div className="card-badge">
-                            {item.products_badge}
+                            {tags.find(tag => tag.id === item.products_badge_id)?.name}
                         </div>
                         <div className="card-wishlist flex medel center">
                             <FaRegHeart />
                         </div>
-                        <div className="card-image" style={{ backgroundImage: `url("${server+item.products_image}")` }} />
+                        <div className="card-image" style={{ backgroundImage: `url("${server + item.products_image || loadingImg}")` }} />
                         <div className="card-content">
                             <p className="card-category flex center medel">
                                 {

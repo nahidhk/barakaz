@@ -14,7 +14,7 @@ export default function Category() {
 
     const { jsonData: catagory = [], loading: loading1, refetch: refetchCat } = useGetApi("catagory");
     const { jsonData: subCatagory = [], loading: loading2, refetch } = useGetApi("subcatagory");
-     const { jsonData: tags = [], loading: loading3, refetch : rTag } = useGetApi("tags");
+    const { jsonData: tags = [], loading: loading3, refetch: rTag } = useGetApi("tags");
 
     const loadingif = loading1 || loading2 || loading3;
 
@@ -170,6 +170,46 @@ export default function Category() {
             .catch(err => console.log(err));
     };
 
+
+    // =========================
+    //  Add Tags
+    // =========================
+    const [taginput, setTagInput] = useState("");
+    const handelTagAdd = () => {
+
+        if (!taginput.trim()) {
+            toast.error("Tags name required");
+            return;
+        }
+        const tagData = taginput.trim();
+
+        // add new
+        postApi({
+            table: "tags",
+            data: { name: tagData }
+        })
+            .then(res => {
+                if (!res.ok) throw new Error("Server error");
+                return res.json();
+            })
+            .then(res => {
+                if (res.error) {
+                    toast.error(res.error);
+                } else {
+                    toast.success(res.message);
+                    setcatagoryData("");
+                    refetchCat();
+                }
+            })
+            .catch(err => console.log(err));
+
+
+    }
+
+
+
+
+
     return (
         <div className="flex center column gap20">
 
@@ -270,10 +310,11 @@ export default function Category() {
                                 type="text"
                                 className="input"
                                 placeholder="Search or Add Tags..."
-                                
+                                value={taginput}
+                                onChange={(e) => setTagInput(e.target.value)}
                             />
 
-                            <button onClick={handleCategory} className="btn">
+                            <button onClick={handelTagAdd} className="btn">
                                 Add
                             </button>
 

@@ -403,11 +403,32 @@ body {
     transform: scale(1);
   }
 }
-.in_bor{
+
+.in_bor {
   width: 80%;
   border-bottom: 1px dashed #d0d0d0;
   padding: 6px;
   margin: 6px;
+}
+
+.fileInput {
+  height: 110px;
+  width: 150px;
+  border: 1px solid #bebebe;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #e7e7e7;
+  font-size: 13px;
+  flex-direction: column;
+  cursor: pointer;
+}
+.fitImg{
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 @media (max-width: 768px) {

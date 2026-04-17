@@ -7,6 +7,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import { RiCloseLargeFill } from "react-icons/ri";
 import { MdOutlineCloudUpload } from "react-icons/md";
 
+
+
 export default function Product() {
     const { jsonData: product, loading: l1 } = useGetApi("products");
     const { jsonData: catege, loading: l2 } = useGetApi("catagory");
@@ -23,6 +25,12 @@ export default function Product() {
     const selectCate = (data) => {
         setTubSub(subC.filter(item => JSON.stringify(item.catagory_id) === data))
     }
+
+    // ia,ge system
+
+
+    const [imgData, setImgData] = useState("");
+
 
 
 
@@ -63,18 +71,38 @@ export default function Product() {
                                     }
                                 </select>
                                 <select className="input">
-                                    <option selected disabled>Input tags (optional)</option>
+                                    <option selected>Input tags (optional)</option>
+                                    {
+                                        tags.map(item => (
+                                            <option key={item.id}>{item.name}</option>
+                                        ))
+                                    }
                                 </select>
 
 
                                 <input type="text" className="input" placeholder="Input product name *" />
                                 <input type="number" className="input" placeholder="Input old price *" />
                                 <input type="number" className="input" placeholder="Input new price *" />
-                                <div className="flex around">
-                                    <div>
-                                        <input type="file" className="input" />
-                                    </div>
-                                </div>
+                                <label className="fileInput" htmlFor="fileInput">
+
+
+                                    {
+                                        imgData ? (
+                                            <>
+                                            <img className="fitImg" src={URL.createObjectURL(imgData)} alt={imgData} />
+                                            </>
+                                           
+                                        ) : (
+                                            <>
+                                                <MdOutlineCloudUpload className="icon" />Select and Drop
+                                            </>
+                                        )
+                                    }
+                                </label>
+                                <input onChange={(e) => setImgData(e.target.files[0])} id="fileInput" type="file" hidden />
+                                <button className="input btn">
+                                    Save and post
+                                </button>
                             </div>
                         </div>
                     ) : null
