@@ -32,6 +32,13 @@ export default function Product() {
     const [imgData, setImgData] = useState("");
 
 
+    const handelPost = () => {
+        alert("hello")
+    }
+
+
+
+
 
 
     return (
@@ -100,7 +107,7 @@ export default function Product() {
                                     }
                                 </label>
                                 <input onChange={(e) => setImgData(e.target.files[0])} id="fileInput" type="file" hidden />
-                                <button className="input btn">
+                                <button onClick={handelPost} className="input btn">
                                     Save and post
                                 </button>
                             </div>
